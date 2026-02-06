@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.stream.Collectors;
 
 public class DatabaseInitializer {
 
@@ -38,20 +37,36 @@ public class DatabaseInitializer {
                 throw new IOException("Schema file not found: " + schemaPath);
             }
 
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
-                String sql = reader.lines().collect(Collectors.joining("\n"));
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                    Statement stmt = conn.createStatement()) {
 
-                // Split by semicolon to execute multiple statements if needed,
-                // but usually simple schemas can be run in blocks if supported or split
-                // manually.
-                // For simplicity assuming the file contains valid SQL statements separated by ;
-                String[] statements = sql.split(";");
+                String delimiter = ";";
+                StringBuilder currentStatement = new StringBuilder();
+                String line;
 
-                try (Statement stmt = conn.createStatement()) {
-                    for (String statement : statements) {
-                        if (!statement.trim().isEmpty()) {
-                            stmt.execute(statement);
+                while ((line = reader.readLine()) != null) {
+                    String trimmedLine = line.trim();
+
+                    if (trimmedLine.isEmpty() || trimmedLine.startsWith("--")) {
+                        continue;
+                    }
+
+                    if (trimmedLine.toUpperCase().startsWith("DELIMITER")) {
+                        delimiter = trimmedLine.substring("DELIMITER".length()).trim();
+                        continue;
+                    }
+
+                    currentStatement.append(line).append("\n");
+
+                    if (trimmedLine.endsWith(delimiter)) {
+                        String sql = currentStatement.toString().trim();
+                        // Remove the delimiter from the end
+                        sql = sql.substring(0, sql.lastIndexOf(delimiter));
+
+                        if (!sql.trim().isEmpty()) {
+                            stmt.execute(sql);
                         }
+                        currentStatement.setLength(0);
                     }
                 }
             }
