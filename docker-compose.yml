@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: gestordatos-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-Sandro.89}
+      MYSQL_DATABASE: gestordatos
+    ports:
+      - "3306:3306"
+    volumes:
+      - maria_data:/var/lib/mysql
+
+volumes:
+  maria_data:

@@ -39,18 +39,36 @@ public class DatabaseInitializer {
             }
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
-                String sql = reader.lines().collect(Collectors.joining("\n"));
-
-                // Split by semicolon to execute multiple statements if needed,
-                // but usually simple schemas can be run in blocks if supported or split
-                // manually.
-                // For simplicity assuming the file contains valid SQL statements separated by ;
-                String[] statements = sql.split(";");
+                StringBuilder sb = new StringBuilder();
+                String line;
+                String delimiter = ";";
 
                 try (Statement stmt = conn.createStatement()) {
-                    for (String statement : statements) {
-                        if (!statement.trim().isEmpty()) {
-                            stmt.execute(statement);
+                    while ((line = reader.readLine()) != null) {
+                        String trimmedLine = line.trim();
+
+                        if (trimmedLine.isEmpty() || trimmedLine.startsWith("--")) {
+                            continue;
+                        }
+
+                        if (trimmedLine.toUpperCase().startsWith("DELIMITER")) {
+                            delimiter = trimmedLine.substring(9).trim();
+                            continue;
+                        }
+
+                        sb.append(line).append("\n");
+
+                        if (trimmedLine.endsWith(delimiter)) {
+                            String sql = sb.toString().trim();
+                            // Remove delimiter from the end
+                            if (sql.endsWith(delimiter)) {
+                                sql = sql.substring(0, sql.length() - delimiter.length());
+                            }
+
+                            if (!sql.trim().isEmpty()) {
+                                stmt.execute(sql);
+                            }
+                            sb.setLength(0);
                         }
                     }
                 }

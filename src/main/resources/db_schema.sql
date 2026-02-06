@@ -27,9 +27,40 @@ CREATE TABLE prestamo (
     dia_vencimiento DATE,
     importe FLOAT NOT NULL,
     esta_pagado BOOLEAN DEFAULT FALSE,
+    estado VARCHAR(20) DEFAULT 'PENDIENTE',
     id_socio INT,
+    limite_prestamo INT NOT NULL DEFAULT 1000,
     FOREIGN KEY (id_socio) REFERENCES socio(id)
 );
+
+-- Trigger for email validation
+DELIMITER //
+CREATE TRIGGER check_email_valido
+BEFORE INSERT ON socio
+FOR EACH ROW
+BEGIN
+    IF (NEW.email NOT LIKE '%@%._%' ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: El email debe tener formato válido (ej: usuario@dominio.com)';
+    END IF;
+END //
+DELIMITER ;
+
+-- Trigger for max loans validation
+DELIMITER //
+CREATE TRIGGER check_max_prestamos
+BEFORE INSERT ON prestamo
+FOR EACH ROW
+BEGIN
+    DECLARE num_prestamos INT;
+    SELECT COUNT(*) INTO num_prestamos FROM prestamo WHERE id_socio = NEW.id_socio;
+    
+    IF (num_prestamos >= 5) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: El socio ha superado el máximo de 5 préstamos permitidos.';
+    END IF;
+END //
+DELIMITER ;
 
 -- Insert initial Prestamo data
 INSERT INTO prestamo(dia_prestamo, importe, id_socio)

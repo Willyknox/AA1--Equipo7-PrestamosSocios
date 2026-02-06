@@ -13,7 +13,7 @@ public class DatabaseConnection {
 
     private String url = "jdbc:mariadb://localhost:3306/gestordatos";
     private String user = "root";
-    private String password = "";
+    private String password = "Sandro.89";
 
     private DatabaseConnection() {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("db.properties")) {
