@@ -14,13 +14,12 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        // Load default view
-        loadView("SocioForm");
+        // La pantalla de bienvenida se muestra por defecto desde el FXML
     }
 
     @FXML
     private void showSocios() {
-        loadView("SocioForm");
+        loadView("vista-socio");
     }
 
     @FXML
@@ -28,10 +27,9 @@ public class MainController {
         loadView("PrestamoForm");
     }
 
-    // Future requirement: TableView
     @FXML
     private void showTabla() {
-        // loadView("TablaView");
+        loadView("TablaView");
     }
 
     private void loadView(String fxml) {
