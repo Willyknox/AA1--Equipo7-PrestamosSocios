@@ -31,7 +31,7 @@ public class MainController {
     // Future requirement: TableView
     @FXML
     private void showTabla() {
-        // loadView("TablaView");
+        loadView("TablaView");
     }
 
     private void loadView(String fxml) {
