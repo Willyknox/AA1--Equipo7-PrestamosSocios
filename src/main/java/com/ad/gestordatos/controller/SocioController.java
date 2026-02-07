@@ -46,7 +46,7 @@ public class SocioController {
     @FXML
     public void initialize() {
         refreshContext();
-        if (!sociosList.isEmpty()) {
+        if (sociosList != null && !sociosList.isEmpty()) {
             currentIndex = 0;
             showSocio(getSocioAt(currentIndex));
         } else {
@@ -102,7 +102,7 @@ public class SocioController {
     }
 
     private Socio getSocioAt(int index) {
-        if (index >= 0 && index < sociosList.size()) {
+        if (sociosList != null && index >= 0 && index < sociosList.size()) {
             return sociosList.get(index);
         }
         return null;

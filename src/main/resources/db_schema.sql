@@ -1,7 +1,3 @@
--- Create database if not exists
-CREATE DATABASE IF NOT EXISTS gestordatos;
-USE gestordatos;
-
 -- Drop tables if they exist to start fresh
 DROP TABLE IF EXISTS prestamo;
 DROP TABLE IF EXISTS socio;
@@ -34,3 +30,16 @@ CREATE TABLE prestamo (
 -- Insert initial Prestamo data
 INSERT INTO prestamo(dia_prestamo, importe, id_socio)
 values ('2026-02-05', '50.5', '1');
+
+-- Triggers
+DELIMITER ;;
+/*!50003 CREATE TRIGGER check_email_valido
+BEFORE INSERT ON socio
+FOR EACH ROW
+BEGIN
+    IF (NEW.email NOT LIKE '%@%._%' ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: El email debe tener formato válido (ej: usuario@dominio.com)';
+    END IF;
+END */;;
+DELIMITER ;
