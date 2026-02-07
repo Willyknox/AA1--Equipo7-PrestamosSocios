@@ -56,6 +56,10 @@ public class GestorDatos {
     // ============================
 
     public void createPrestamo(Prestamo prestamo) throws Exception {
+        List<Prestamo> existingLoans = getPrestamosBySocio(prestamo.getIdSocio());
+        if (existingLoans.size() >= 5) {
+            throw new Exception("Has superado el límite de préstamos (máximo 5) para este socio.");
+        }
         prestamoDAO.create(prestamo);
     }
 
