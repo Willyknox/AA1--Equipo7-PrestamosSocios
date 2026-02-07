@@ -27,7 +27,7 @@ public class App extends Application {
             // Load the main scene
             scene = new Scene(loadFXML(MAIN_VIEW), 800, 600);
             stage.setScene(scene);
-            stage.setTitle("Gestor de Datos");
+            stage.setTitle("Data Manager");
 
             // Ensure window closes existing threads
             stage.setOnCloseRequest(event -> {

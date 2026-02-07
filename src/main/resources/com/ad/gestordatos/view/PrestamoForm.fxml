@@ -25,7 +25,7 @@
         </padding>
 
         <!-- Titulo -->
-        <Label text="Gestión de Préstamos">
+        <Label text="Loan Management">
             <font>
                 <Font name="System Bold" size="22.0" />
             </font>
@@ -48,24 +48,24 @@
             </rowConstraints>
 
             <!-- Dia Prestamo -->
-            <Label style="-fx-font-size: 14px;" text="Día Préstamo:" />
+            <Label style="-fx-font-size: 14px;" text="Loan Date:" />
             <DatePicker fx:id="dpPrestamo" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
 
             <!-- Dia Vencimiento -->
-            <Label style="-fx-font-size: 14px;" text="Día Vencimiento:" GridPane.rowIndex="1" />
+            <Label style="-fx-font-size: 14px;" text="Due Date:" GridPane.rowIndex="1" />
             <DatePicker fx:id="dpVencimiento" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
             <!-- Importe -->
-            <Label style="-fx-font-size: 14px;" text="Importe:" GridPane.rowIndex="2" />
+            <Label style="-fx-font-size: 14px;" text="Amount:" GridPane.rowIndex="2" />
             <TextField fx:id="txtImporte" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
             <!-- Esta Pagado -->
-            <Label style="-fx-font-size: 14px;" text="Está Pagado:" GridPane.rowIndex="3" />
+            <Label style="-fx-font-size: 14px;" text="Is Paid:" GridPane.rowIndex="3" />
             <CheckBox fx:id="chkPagado" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
             <!-- Socio -->
-            <Label style="-fx-font-size: 14px;" text="Socio:" GridPane.rowIndex="4" />
-            <ComboBox fx:id="cmbSocio" maxWidth="1.7976931348623157E308" promptText="Seleccione un socio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label style="-fx-font-size: 14px;" text="Partner:" GridPane.rowIndex="4" />
+            <ComboBox fx:id="cmbSocio" maxWidth="1.7976931348623157E308" promptText="Select a partner" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         </GridPane>
 
         <!-- Labels de estado -->
@@ -83,10 +83,10 @@
 
         <!-- Botones de accion -->
         <HBox alignment="CENTER" spacing="12.0">
-            <Button onAction="#onNew" prefWidth="100.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" text="Nuevo" />
-            <Button onAction="#onSave" prefWidth="100.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Guardar" />
-            <Button onAction="#onDelete" prefWidth="100.0" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;" text="Eliminar" />
-            <Button onAction="#onVolver" prefWidth="100.0" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold;" text="Volver" />
+            <Button onAction="#onNew" prefWidth="100.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" text="New" />
+            <Button onAction="#onSave" prefWidth="100.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Save" />
+            <Button onAction="#onDelete" prefWidth="100.0" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete" />
+            <Button onAction="#onVolver" prefWidth="100.0" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold;" text="Back" />
         </HBox>
 
     </VBox>

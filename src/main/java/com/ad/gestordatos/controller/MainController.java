@@ -157,7 +157,7 @@ public class MainController {
         } catch (IOException e) {
             System.err.println("ERROR: Failed to load view " + fxml);
             e.printStackTrace();
-            showError("Error de Navegación", "No se pudo cargar la vista: " + fxml + "\n" + e.getMessage());
+            showError("Navigation Error", "Could not load view: " + fxml + "\n" + e.getMessage());
         }
     }
 

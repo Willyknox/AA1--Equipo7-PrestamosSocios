@@ -89,7 +89,7 @@ public class SociosTableController {
             List<Socio> lista = gestorDatos.getAllSocios();
             tableSocios.setItems(FXCollections.observableArrayList(lista));
         } catch (Exception e) {
-            showError("Error al cargar socios: " + e.getMessage());
+            showError("Error loading partners: " + e.getMessage());
         }
     }
 

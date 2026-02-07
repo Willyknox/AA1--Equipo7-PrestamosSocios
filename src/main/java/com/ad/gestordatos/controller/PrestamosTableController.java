@@ -76,7 +76,7 @@ public class PrestamosTableController {
         } catch (Exception e) {
             System.err.println("ERROR: Failed to load data in PrestamosTableController");
             e.printStackTrace();
-            showError("Error al cargar datos: " + e.getMessage());
+            showError("Error loading data: " + e.getMessage());
         }
     }
 
@@ -84,23 +84,23 @@ public class PrestamosTableController {
     private void onEliminar() {
         PrestamoConSocio selected = tablePrestamos.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showWarning("Seleccione un préstamo de la tabla para eliminar.");
+            showWarning("Select a loan from the table to delete.");
             return;
         }
 
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirmar eliminación");
+        confirm.setTitle("Confirm Deletion");
         confirm.setHeaderText(null);
-        confirm.setContentText("¿Está seguro de que desea eliminar este préstamo?");
+        confirm.setContentText("Are you sure you want to delete this loan?");
 
         Optional<ButtonType> result = confirm.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 gestorDatos.deletePrestamo(selected.getPrestamoId());
-                showInfo("Préstamo eliminado correctamente.");
+                showInfo("Loan deleted successfully.");
                 loadData();
             } catch (Exception e) {
-                showError("Error al eliminar: " + e.getMessage());
+                showError("Error deleting: " + e.getMessage());
             }
         }
     }
@@ -109,7 +109,7 @@ public class PrestamosTableController {
     private void onEditar() {
         PrestamoConSocio selected = tablePrestamos.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showWarning("Seleccione un préstamo de la tabla para editar.");
+            showWarning("Select a loan from the table to edit.");
             return;
         }
         if (mainController != null) {
@@ -125,7 +125,7 @@ public class PrestamosTableController {
                         prestamo.isEstaPagado(),
                         prestamo.getIdSocio());
             } catch (Exception e) {
-                showError("Error al cargar préstamo: " + e.getMessage());
+                showError("Error loading loan: " + e.getMessage());
             }
         }
     }

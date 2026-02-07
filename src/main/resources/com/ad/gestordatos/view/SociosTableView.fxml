@@ -18,7 +18,7 @@
             <Insets bottom="25.0" left="40.0" right="40.0" top="25.0" />
         </padding>
 
-        <Label text="Lista de Socios">
+        <Label text="Partner List">
             <font>
                 <Font name="System Bold" size="22.0" />
             </font>
@@ -28,12 +28,12 @@
 
         <TableView fx:id="tableSocios" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colDni" text="DNI" prefWidth="100.0" />
-                <TableColumn fx:id="colNombre" text="Nombre" prefWidth="120.0" />
-                <TableColumn fx:id="colApellido1" text="Apellido 1" prefWidth="120.0" />
-                <TableColumn fx:id="colApellido2" text="Apellido 2" prefWidth="120.0" />
+                <TableColumn fx:id="colDni" text="ID Card (DNI)" prefWidth="100.0" />
+                <TableColumn fx:id="colNombre" text="Name" prefWidth="120.0" />
+                <TableColumn fx:id="colApellido1" text="Surname 1" prefWidth="120.0" />
+                <TableColumn fx:id="colApellido2" text="Surname 2" prefWidth="120.0" />
                 <TableColumn fx:id="colEmail" text="Email" prefWidth="180.0" />
-                <TableColumn fx:id="colNacimiento" text="F. Nacimiento" prefWidth="110.0" />
+                <TableColumn fx:id="colNacimiento" text="Birth Date" prefWidth="110.0" />
             </columns>
         </TableView>
 
@@ -41,9 +41,9 @@
 
         <!-- Botones de accion -->
         <HBox alignment="CENTER" spacing="12.0">
-            <Button onAction="#onModificar" prefWidth="120.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Modificar" />
-            <Button onAction="#onBorrar" prefWidth="120.0" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;" text="Borrar" />
-            <Button onAction="#onVolver" prefWidth="120.0" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold;" text="Volver al Menu" />
+            <Button onAction="#onModificar" prefWidth="120.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Edit" />
+            <Button onAction="#onBorrar" prefWidth="120.0" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete" />
+            <Button onAction="#onVolver" prefWidth="120.0" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold;" text="Back to Menu" />
         </HBox>
 
     </VBox>

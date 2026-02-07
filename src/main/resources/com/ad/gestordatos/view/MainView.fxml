@@ -23,14 +23,14 @@
             </padding>
 
             <!-- Titulo principal -->
-            <Label text="Gestión de Préstamos" style="-fx-text-fill: #1a237e;">
+            <Label text="Loan Management" style="-fx-text-fill: #1a237e;">
                 <font>
                     <Font name="System Bold" size="36.0" />
                 </font>
             </Label>
 
             <!-- Subtitulo -->
-            <Label text="Seleccione una opción para comenzar" style="-fx-text-fill: #5c6bc0; -fx-font-size: 14px;" />
+            <Label text="Select an option to begin" style="-fx-text-fill: #5c6bc0; -fx-font-size: 14px;" />
 
             <Separator prefWidth="400.0" maxWidth="400.0" style="-fx-background-color: #7986cb;" />
 
@@ -45,9 +45,9 @@
                     <effect>
                         <DropShadow color="#00000033" radius="15.0" offsetY="4.0" />
                     </effect>
-                    <Label text="SOCIOS" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
-                    <Button onAction="#showSocios" text="Crear Socio" prefWidth="150.0" prefHeight="45.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 8; -fx-cursor: hand;" />
-                    <Label text="Registrar nuevo socio" style="-fx-text-fill: #757575; -fx-font-size: 12px;" />
+                    <Label text="PARTNERS" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+                    <Button onAction="#showSocios" text="Create Partner" prefWidth="150.0" prefHeight="45.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 8; -fx-cursor: hand;" />
+                    <Label text="Register new partner" style="-fx-text-fill: #757575; -fx-font-size: 12px;" />
                 </VBox>
 
                 <!-- Boton Prestamos -->
@@ -55,9 +55,9 @@
                     <effect>
                         <DropShadow color="#00000033" radius="15.0" offsetY="4.0" />
                     </effect>
-                    <Label text="PRÉSTAMOS" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
-                    <Button onAction="#showPrestamos" text="Préstamos" prefWidth="150.0" prefHeight="45.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 8; -fx-cursor: hand;" />
-                    <Label text="Gestionar préstamos" style="-fx-text-fill: #757575; -fx-font-size: 12px;" />
+                    <Label text="LOANS" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+                    <Button onAction="#showPrestamos" text="Loans" prefWidth="150.0" prefHeight="45.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 8; -fx-cursor: hand;" />
+                    <Label text="Manage loans" style="-fx-text-fill: #757575; -fx-font-size: 12px;" />
                 </VBox>
 
                 <!-- Boton Lista Prestamos -->
@@ -65,9 +65,9 @@
                     <effect>
                         <DropShadow color="#00000033" radius="15.0" offsetY="4.0" />
                     </effect>
-                    <Label text="LISTA" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
-                    <Button onAction="#showTabla" text="Lista Préstamos" prefWidth="150.0" prefHeight="45.0" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 8; -fx-cursor: hand;" />
-                    <Label text="Ver todos los préstamos" style="-fx-text-fill: #757575; -fx-font-size: 12px;" />
+                    <Label text="LIST" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+                    <Button onAction="#showTabla" text="Loan List" prefWidth="150.0" prefHeight="45.0" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 8; -fx-cursor: hand;" />
+                    <Label text="View all loans" style="-fx-text-fill: #757575; -fx-font-size: 12px;" />
                 </VBox>
 
             </HBox>
@@ -78,8 +78,8 @@
     <!-- Barra inferior -->
     <bottom>
         <HBox style="-fx-background-color: #303f9f; -fx-padding: 8 15 8 15;" alignment="CENTER_RIGHT" prefWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-            <Label style="-fx-font-size: 11px; -fx-text-fill: white;" text="Gestor de Datos - Equipo 7" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-            <Button onAction="#showSociosTable" text="Socios" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12px; -fx-background-radius: 6; -fx-cursor: hand;" />
+            <Label style="-fx-font-size: 11px; -fx-text-fill: white;" text="Data Manager - Team 7" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+            <Button onAction="#showSociosTable" text="Partners" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12px; -fx-background-radius: 6; -fx-cursor: hand;" />
         </HBox>
     </bottom>
 
