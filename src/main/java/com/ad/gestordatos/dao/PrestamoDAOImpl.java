@@ -1,6 +1,7 @@
 package com.ad.gestordatos.dao;
 
 import com.ad.gestordatos.model.Prestamo;
+import com.ad.gestordatos.model.PrestamoConSocio;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -117,6 +118,33 @@ public class PrestamoDAOImpl implements PrestamoDAO {
             }
         }
         return prestamos;
+    }
+
+    @Override
+    public List<PrestamoConSocio> findAllWithSocio() throws Exception {
+        List<PrestamoConSocio> lista = new ArrayList<>();
+        String sql = "SELECT p.id, s.nombre, s.dni, p.dia_prestamo, p.dia_vencimiento, p.importe, p.esta_pagado " +
+                     "FROM prestamo p JOIN socio s ON p.id_socio = s.id";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                PrestamoConSocio pcs = new PrestamoConSocio();
+                pcs.setPrestamoId(rs.getInt("id"));
+                pcs.setNombreSocio(rs.getString("nombre"));
+                pcs.setDniSocio(rs.getString("dni"));
+                pcs.setDiaPrestamo(rs.getDate("dia_prestamo").toLocalDate());
+                Date dv = rs.getDate("dia_vencimiento");
+                if (dv != null) {
+                    pcs.setDiaVencimiento(dv.toLocalDate());
+                }
+                pcs.setImporte(rs.getFloat("importe"));
+                pcs.setEstaPagado(rs.getBoolean("esta_pagado"));
+                lista.add(pcs);
+            }
+        }
+        return lista;
     }
 
     private Prestamo mapResultSetToPrestamo(ResultSet rs) throws SQLException {

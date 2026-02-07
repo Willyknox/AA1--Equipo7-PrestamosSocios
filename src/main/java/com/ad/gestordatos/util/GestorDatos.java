@@ -2,6 +2,7 @@ package com.ad.gestordatos.util;
 
 import com.ad.gestordatos.dao.*;
 import com.ad.gestordatos.model.Prestamo;
+import com.ad.gestordatos.model.PrestamoConSocio;
 import com.ad.gestordatos.model.Socio;
 import java.util.List;
 
@@ -60,5 +61,9 @@ public class GestorDatos {
 
     public List<Prestamo> getPrestamosBySocio(int idSocio) throws Exception {
         return prestamoDAO.findAllBySocio(idSocio);
+    }
+
+    public List<PrestamoConSocio> getAllPrestamosConSocio() throws Exception {
+        return prestamoDAO.findAllWithSocio();
     }
 }

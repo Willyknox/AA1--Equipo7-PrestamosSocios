@@ -1,6 +1,7 @@
 package com.ad.gestordatos.dao;
 
 import com.ad.gestordatos.model.Prestamo;
+import com.ad.gestordatos.model.PrestamoConSocio;
 import java.util.List;
 
 public interface PrestamoDAO {
@@ -15,4 +16,6 @@ public interface PrestamoDAO {
     List<Prestamo> findAllBySocio(int idSocio) throws Exception;
 
     List<Prestamo> findAll() throws Exception;
+
+    List<PrestamoConSocio> findAllWithSocio() throws Exception;
 }

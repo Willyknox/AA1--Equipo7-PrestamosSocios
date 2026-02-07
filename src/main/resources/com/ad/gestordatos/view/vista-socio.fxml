@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -17,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom, #e8eaf6, #c5cae9);" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ad.gestordatos.controller.PrestamoController">
+<AnchorPane prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom, #e8eaf6, #c5cae9);" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ad.gestordatos.controller.SocioController">
 
     <VBox alignment="TOP_CENTER" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <padding>
@@ -25,7 +24,7 @@
         </padding>
 
         <!-- Titulo -->
-        <Label text="Gestión de Préstamos">
+        <Label text="Gestión de Socios">
             <font>
                 <Font name="System Bold" size="22.0" />
             </font>
@@ -45,27 +44,40 @@
                 <RowConstraints minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
             </rowConstraints>
 
-            <!-- Dia Prestamo -->
-            <Label style="-fx-font-size: 14px;" text="Día Préstamo:" />
-            <DatePicker fx:id="dpPrestamo" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+            <!-- DNI -->
+            <Label style="-fx-font-size: 14px;" text="DNI:" />
+            <TextField fx:id="txtDni" promptText="12345678A" GridPane.columnIndex="1" />
 
-            <!-- Dia Vencimiento -->
-            <Label style="-fx-font-size: 14px;" text="Día Vencimiento:" GridPane.rowIndex="1" />
-            <DatePicker fx:id="dpVencimiento" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <!-- Nombre -->
+            <Label style="-fx-font-size: 14px;" text="Nombre:" GridPane.rowIndex="1" />
+            <TextField fx:id="txtNombre" promptText="Nombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <!-- Importe -->
-            <Label style="-fx-font-size: 14px;" text="Importe:" GridPane.rowIndex="2" />
-            <TextField fx:id="txtImporte" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <!-- Apellido 1 -->
+            <Label style="-fx-font-size: 14px;" text="Primer Apellido:" GridPane.rowIndex="2" />
+            <TextField fx:id="txtApellido1" promptText="Primer apellido" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-            <!-- Esta Pagado -->
-            <Label style="-fx-font-size: 14px;" text="Está Pagado:" GridPane.rowIndex="3" />
-            <CheckBox fx:id="chkPagado" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <!-- Apellido 2 -->
+            <Label style="-fx-font-size: 14px;" text="Segundo Apellido:" GridPane.rowIndex="3" />
+            <TextField fx:id="txtApellido2" promptText="Segundo apellido" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-            <!-- Socio -->
-            <Label style="-fx-font-size: 14px;" text="Socio:" GridPane.rowIndex="4" />
-            <ComboBox fx:id="cmbSocio" maxWidth="1.7976931348623157E308" promptText="Seleccione un socio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <!-- Email -->
+            <Label style="-fx-font-size: 14px;" text="Email:" GridPane.rowIndex="4" />
+            <TextField fx:id="txtEmail" promptText="email@ejemplo.com" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+            <!-- Fecha Nacimiento -->
+            <Label style="-fx-font-size: 14px;" text="Fecha Nacimiento:" GridPane.rowIndex="5" />
+            <DatePicker fx:id="dpNacimiento" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+            <!-- Mas Prestamos -->
+            <Label alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="227.0" style="-fx-font-size: 14px;" text="Permitir notificaciones por email" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets></Label>
+            <CheckBox fx:id="chkMasPrestamos" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
         </GridPane>
 
         <!-- Labels de estado -->
