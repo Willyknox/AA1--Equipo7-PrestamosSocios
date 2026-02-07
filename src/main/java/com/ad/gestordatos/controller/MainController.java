@@ -12,14 +12,35 @@ public class MainController {
     @FXML
     private BorderPane mainContainer;
 
+    private Parent welcomeContent;
+
     @FXML
     public void initialize() {
-        // La pantalla de bienvenida se muestra por defecto desde el FXML
+        // Guardar el contenido de bienvenida original para poder restaurarlo
+        welcomeContent = (Parent) mainContainer.getCenter();
     }
 
     @FXML
     private void showSocios() {
         loadView("vista-socio");
+    }
+
+    @FXML
+    private void showSociosTable() {
+        loadView("SociosTableView");
+    }
+
+    public void loadSocioFormWithData(com.ad.gestordatos.model.Socio socio) {
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("view/vista-socio.fxml"));
+            Parent view = loader.load();
+            SocioController controller = loader.getController();
+            controller.setMainController(this);
+            controller.loadSocioForEdit(socio);
+            mainContainer.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -32,14 +53,42 @@ public class MainController {
         loadView("TablaView");
     }
 
+    public void showWelcome() {
+        mainContainer.setCenter(welcomeContent);
+    }
+
+    public void loadPrestamoFormWithData(int prestamoId, java.time.LocalDate diaPrestamo,
+            java.time.LocalDate diaVencimiento, float importe, boolean pagado, int idSocio) {
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("view/PrestamoForm.fxml"));
+            Parent view = loader.load();
+            PrestamoController controller = loader.getController();
+            controller.setMainController(this);
+            controller.loadPrestamoForEdit(prestamoId, diaPrestamo, diaVencimiento, importe, pagado, idSocio);
+            mainContainer.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void loadView(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("view/" + fxml + ".fxml"));
             Parent view = loader.load();
+            // Pasar referencia del MainController a los controllers hijos
+            Object controller = loader.getController();
+            if (controller instanceof SocioController) {
+                ((SocioController) controller).setMainController(this);
+            } else if (controller instanceof PrestamoController) {
+                ((PrestamoController) controller).setMainController(this);
+            } else if (controller instanceof TablaController) {
+                ((TablaController) controller).setMainController(this);
+            } else if (controller instanceof SociosTableController) {
+                ((SociosTableController) controller).setMainController(this);
+            }
             mainContainer.setCenter(view);
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle error (maybe show alert)
         }
     }
 }

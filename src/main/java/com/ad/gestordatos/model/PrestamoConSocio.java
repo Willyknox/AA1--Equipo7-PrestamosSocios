@@ -38,6 +38,24 @@ public class PrestamoConSocio {
         return nombreSocio;
     }
 
+    public String getNombreSolo() {
+        if (nombreSocio == null) return "";
+        String[] partes = nombreSocio.split(" ", 3);
+        return partes.length > 0 ? partes[0] : "";
+    }
+
+    public String getApellido1Socio() {
+        if (nombreSocio == null) return "";
+        String[] partes = nombreSocio.split(" ", 3);
+        return partes.length > 1 ? partes[1] : "";
+    }
+
+    public String getApellido2Socio() {
+        if (nombreSocio == null) return "";
+        String[] partes = nombreSocio.split(" ", 3);
+        return partes.length > 2 ? partes[2] : "";
+    }
+
     public void setNombreSocio(String nombreSocio) {
         this.nombreSocio = nombreSocio;
     }

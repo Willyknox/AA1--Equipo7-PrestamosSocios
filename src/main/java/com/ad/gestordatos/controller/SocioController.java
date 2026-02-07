@@ -5,6 +5,7 @@ import com.ad.gestordatos.util.GestorDatos;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class SocioController {
 
@@ -12,6 +13,10 @@ public class SocioController {
     private TextField txtDni;
     @FXML
     private TextField txtNombre;
+    @FXML
+    private TextField txtApellido1;
+    @FXML
+    private TextField txtApellido2;
     @FXML
     private TextField txtEmail;
     @FXML
@@ -24,11 +29,18 @@ public class SocioController {
     private Label lblInfo;
 
     private GestorDatos gestorDatos;
-    private List<Socio> sociosList;
+    private List<Socio> sociosList = new java.util.ArrayList<>();
     private int currentIndex = -1;
+    private MainController mainController;
+
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
 
     public SocioController() {
         gestorDatos = new GestorDatos();
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
     @FXML
@@ -41,13 +53,42 @@ public class SocioController {
             clearFields();
         }
 
-        // Add listeners for basic validation feedback (optional per requirement
-        // "Validation en linea")
+        // Validacion DNI en tiempo real
         txtDni.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!Socio.isValidDni(newVal)) {
                 lblError.setText("Formato DNI inválido (8 num + letra)");
-            } else {
+            } else if (lblError.getText().contains("DNI")) {
                 lblError.setText("");
+            }
+        });
+
+        // Validacion Nombre, Apellido1, Apellido2: solo letras y espacios
+        String soloLetrasRegex = "[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+";
+        txtNombre.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && !newVal.isEmpty() && !newVal.matches(soloLetrasRegex)) {
+                txtNombre.setText(oldVal);
+            }
+        });
+        txtApellido1.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && !newVal.isEmpty() && !newVal.matches(soloLetrasRegex)) {
+                txtApellido1.setText(oldVal);
+            }
+        });
+        txtApellido2.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && !newVal.isEmpty() && !newVal.matches(soloLetrasRegex)) {
+                txtApellido2.setText(oldVal);
+            }
+        });
+
+        // Validacion Email al perder el foco
+        txtEmail.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+            if (!isNowFocused) {
+                String email = txtEmail.getText();
+                if (email != null && !email.isEmpty() && !EMAIL_PATTERN.matcher(email).matches()) {
+                    lblError.setText("Formato email inválido (ejemplo@dominio.com)");
+                } else if (lblError.getText().contains("email")) {
+                    lblError.setText("");
+                }
             }
         });
     }
@@ -70,7 +111,11 @@ public class SocioController {
     private void showSocio(Socio socio) {
         if (socio != null) {
             txtDni.setText(socio.getDni());
-            txtNombre.setText(socio.getNombre());
+            // Separar nombre completo en nombre, apellido1, apellido2
+            String[] partes = socio.getNombre() != null ? socio.getNombre().split(" ", 3) : new String[]{""};
+            txtNombre.setText(partes.length > 0 ? partes[0] : "");
+            txtApellido1.setText(partes.length > 1 ? partes[1] : "");
+            txtApellido2.setText(partes.length > 2 ? partes[2] : "");
             txtEmail.setText(socio.getEmail());
             dpNacimiento.setValue(socio.getNacimiento());
             chkMasPrestamos.setSelected(socio.isMasPrestamos());
@@ -116,7 +161,7 @@ public class SocioController {
     @FXML
     private void onNew() {
         clearFields();
-        currentIndex = -1; // Indicator for new record
+        currentIndex = -1;
         lblInfo.setText("Nuevo Socio");
         txtDni.requestFocus();
     }
@@ -124,35 +169,59 @@ public class SocioController {
     @FXML
     private void onSave() {
         try {
-            // Validate
             String dni = txtDni.getText();
-            String nombre = txtNombre.getText();
+            String nombreTxt = txtNombre.getText();
+            String apellido1 = txtApellido1.getText();
+            String apellido2 = txtApellido2.getText();
             String email = txtEmail.getText();
             java.time.LocalDate nacimiento = dpNacimiento.getValue();
             boolean masPrestamos = chkMasPrestamos.isSelected();
 
+            // Validaciones antes de guardar
+            if (!Socio.isValidDni(dni)) {
+                lblError.setText("DNI inválido (8 dígitos + letra)");
+                return;
+            }
+            if (nombreTxt == null || nombreTxt.trim().isEmpty()) {
+                lblError.setText("El nombre no puede estar vacío");
+                return;
+            }
+            if (apellido1 == null || apellido1.trim().isEmpty()) {
+                lblError.setText("El primer apellido no puede estar vacío");
+                return;
+            }
+            if (apellido2 == null || apellido2.trim().isEmpty()) {
+                lblError.setText("El segundo apellido no puede estar vacío");
+                return;
+            }
+            // Concatenar nombre completo
+            String nombre = (nombreTxt.trim() + " " + apellido1.trim() + " " + apellido2.trim()).trim();
+            if (email == null || !EMAIL_PATTERN.matcher(email).matches()) {
+                lblError.setText("Email inválido (ejemplo@dominio.com)");
+                return;
+            }
+            if (nacimiento == null) {
+                lblError.setText("La fecha de nacimiento es obligatoria");
+                return;
+            }
+
             Socio socio = new Socio(dni, nombre, email, nacimiento, masPrestamos);
 
-            // Check validations implicitly by setters in model or explicitly here
             if (currentIndex == -1) {
-                // Create
                 gestorDatos.createSocio(socio);
                 showInfo("Socio creado correctamente.");
             } else {
-                // Update
                 Socio existing = getSocioAt(currentIndex);
                 if (existing != null) {
                     socio.setId(existing.getId());
                     gestorDatos.updateSocio(socio);
-                    showInfo("Socio actualziado correctamente.");
+                    showInfo("Socio actualizado correctamente.");
                 }
             }
             refreshContext();
             if (currentIndex == -1) {
-                // if new, go to last
                 onLast();
             } else {
-                // stay? or reload
                 showSocio(getSocioAt(currentIndex));
             }
 
@@ -168,23 +237,51 @@ public class SocioController {
     private void onDelete() {
         if (currentIndex >= 0 && currentIndex < sociosList.size()) {
             Socio current = getSocioAt(currentIndex);
-            try {
-                gestorDatos.deleteSocio(current.getId());
-                showInfo("Socio eliminado.");
-                refreshContext();
-                if (currentIndex >= sociosList.size()) {
-                    currentIndex = sociosList.size() - 1;
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle("Confirmar eliminación");
+            confirm.setHeaderText(null);
+            confirm.setContentText("¿Está seguro de que desea eliminar el socio " + current.getNombre() + "?");
+            confirm.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    try {
+                        gestorDatos.deleteSocio(current.getId());
+                        showInfo("Socio eliminado.");
+                        refreshContext();
+                        if (currentIndex >= sociosList.size()) {
+                            currentIndex = sociosList.size() - 1;
+                        }
+                        showSocio(getSocioAt(currentIndex));
+                    } catch (Exception e) {
+                        showError("Error al eliminar: " + e.getMessage());
+                    }
                 }
-                showSocio(getSocioAt(currentIndex));
-            } catch (Exception e) {
-                showError("Error al eliminar: " + e.getMessage());
+            });
+        }
+    }
+
+    public void loadSocioForEdit(Socio socio) {
+        refreshContext();
+        for (int i = 0; i < sociosList.size(); i++) {
+            if (sociosList.get(i).getId() == socio.getId()) {
+                currentIndex = i;
+                break;
             }
+        }
+        showSocio(socio);
+    }
+
+    @FXML
+    private void onVolver() {
+        if (mainController != null) {
+            mainController.showWelcome();
         }
     }
 
     private void clearFields() {
         txtDni.clear();
         txtNombre.clear();
+        txtApellido1.clear();
+        txtApellido2.clear();
         txtEmail.clear();
         dpNacimiento.setValue(null);
         chkMasPrestamos.setSelected(false);
