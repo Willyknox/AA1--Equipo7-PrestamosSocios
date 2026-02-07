@@ -70,9 +70,22 @@ public class DatabaseConnection {
                     try {
                         connection = DriverManager.getConnection(url, "root", "root");
                     } catch (SQLException ex) {
-                         System.err.println("Failed to connect with fallback credentials (root/root): " + ex.getMessage());
-                         System.out.println("Attempting fallback with default credentials (root/empty)...");
-                         connection = DriverManager.getConnection(url, "root", "");
+                         System.err.println("Failed with root/root: " + ex.getMessage());
+                         System.out.println("Attempting fallback with root/1234...");
+                         try {
+                             connection = DriverManager.getConnection(url, "root", "1234");
+                         } catch (SQLException ex2) {
+                             System.err.println("Failed with root/1234: " + ex2.getMessage());
+                             System.out.println("Attempting fallback with root/empty...");
+                             try {
+                                 connection = DriverManager.getConnection(url, "root", "");
+                             } catch (SQLException ex3) {
+                                 System.err.println("All connection attempts failed.");
+                                 throw new SQLException("CRITICAL: Could not connect to database '" + url + "'.\n" +
+                                         "Tried: Configured credentials, root/root, root/1234, and root/empty.\n" +
+                                         "Please check if the database exists and your password is correct.", ex3);
+                             }
+                         }
                     }
                 }
             } catch (ClassNotFoundException e) {
