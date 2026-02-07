@@ -9,22 +9,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Utility class for initializing the database schema.
+ * Checks if tables exist and runs the schema SQL script if necessary.
+ */
 public class DatabaseInitializer {
 
+    /**
+     * Initializes the database by creating schema if it doesn't exist.
+     * 
+     * @throws SQLException If a database access error occurs.
+     * @throws IOException  If the schema file cannot be read.
+     */
     public static void initialize() throws SQLException, IOException {
         try (Connection conn = DatabaseConnection.getInstance().getConnection()) {
             if (!tablesExist(conn)) {
-                System.out.println("Database tables not found. Initializing schema...");
+                System.out.println("Initializing database schema...");
                 createSchema(conn);
-                System.out.println("Schema initialized successfully.");
+                System.out.println("Database schema initialized successfully.");
             } else {
-                System.out.println("Database tables already exist.");
+                System.out.println("Database tables already exist. Skipping initialization.");
             }
         }
     }
 
     private static boolean tablesExist(Connection conn) throws SQLException {
-        // Check for a known table, e.g., "socio"
+        // Check for a core table, e.g., "socio"
         try (ResultSet rs = conn.getMetaData().getTables(null, null, "socio", null)) {
             return rs.next();
         }
@@ -34,7 +44,7 @@ public class DatabaseInitializer {
         String schemaPath = "db_schema.sql";
         try (InputStream input = DatabaseInitializer.class.getClassLoader().getResourceAsStream(schemaPath)) {
             if (input == null) {
-                throw new IOException("Schema file not found: " + schemaPath);
+                throw new IOException("Schema file not found in classpath: " + schemaPath);
             }
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(input));

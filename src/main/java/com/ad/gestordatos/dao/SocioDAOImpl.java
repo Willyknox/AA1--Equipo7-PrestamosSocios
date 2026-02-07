@@ -5,6 +5,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of the SocioDAO interface.
+ * Handles database operations for Partner (Socio) entities.
+ */
 public class SocioDAOImpl implements SocioDAO {
 
     @Override
