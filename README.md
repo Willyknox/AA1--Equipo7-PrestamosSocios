@@ -48,4 +48,4 @@ mvn clean javafx:run
 
 ## Decisiones de Diseño e IA
 
-Se ha utilizado IA para generar la estructura inicial (Boilerplate) de las clases DAO y los ficheros FXML, acelerando el desarrollo de código repetitivo. Las validaciones de negocio (DNI regex) y la lógica de conexión se han revisado manualmente para cumplir con los requisitos.
+Se ha utilizado IA para generar la estructura inicial (Boilerplate) de las clases DAO, acelerando el desarrollo de código repetitivo. Las validaciones de negocio (DNI regex) y la lógica de conexión se han revisado manualmente para cumplir con los requisitos.
