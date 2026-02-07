@@ -132,17 +132,13 @@ public class MainController {
      * @param fxml The base name of the FXML file (without .fxml extension).
      */
     private void loadView(String fxml) {
-        System.out.println("DEBUG: Attempting to load view: " + fxml);
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("view/" + fxml + ".fxml"));
             Parent view = loader.load();
-            System.out.println("DEBUG: View loaded successfully: " + fxml);
 
             // Inject MainController reference into the child controller
             // This allows child controllers to trigger navigation (e.g., "Volver" buttons)
             Object controller = loader.getController();
-            System.out.println(
-                    "DEBUG: Controller obtained: " + (controller != null ? controller.getClass().getName() : "null"));
 
             if (controller instanceof SocioController) {
                 ((SocioController) controller).setMainController(this);
@@ -155,7 +151,6 @@ public class MainController {
             }
             mainContainer.setCenter(view);
         } catch (IOException e) {
-            System.err.println("ERROR: Failed to load view " + fxml);
             e.printStackTrace();
             showError("Navigation Error", "Could not load view: " + fxml + "\n" + e.getMessage());
         }

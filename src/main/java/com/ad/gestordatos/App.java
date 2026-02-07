@@ -24,12 +24,10 @@ public class App extends Application {
         initializeDatabase(stage);
 
         try {
-            // Load the main scene
             scene = new Scene(loadFXML(MAIN_VIEW), 800, 600);
             stage.setScene(scene);
             stage.setTitle("Data Manager");
-
-            // Ensure window closes existing threads
+            
             stage.setOnCloseRequest(event -> {
                 System.out.println("Application closing...");
                 System.exit(0);

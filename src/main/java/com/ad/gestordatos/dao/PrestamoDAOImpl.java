@@ -126,7 +126,6 @@ public class PrestamoDAOImpl implements PrestamoDAO {
     @Override
     public List<PrestamoConSocio> findAllWithSocio() throws Exception {
         List<PrestamoConSocio> lista = new ArrayList<>();
-        // Removed explicit join syntax complexity if not needed, but keep standard JOIN
         String sql = "SELECT p.id, s.nombre, s.dni, p.dia_prestamo, p.dia_vencimiento, p.importe, p.esta_pagado " +
                 "FROM prestamo p JOIN socio s ON p.id_socio = s.id";
 
