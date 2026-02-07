@@ -13,7 +13,7 @@ public class DatabaseConnection {
 
     private String url = "jdbc:mariadb://localhost:3306/gestordatos";
     private String user = "root";
-    private String password = "";
+    private String password = "Sandro.89";
 
     private DatabaseConnection() {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("db.properties")) {
@@ -23,9 +23,13 @@ public class DatabaseConnection {
                 this.url = prop.getProperty("db.url", this.url);
                 this.user = prop.getProperty("db.user", this.user);
                 this.password = prop.getProperty("db.password", this.password);
+                System.out.println("DEBUG: Loaded properties. URL: " + this.url + ", User: " + this.user);
+            } else {
+                System.err.println("DEBUG: db.properties not found in classpath!");
             }
         } catch (IOException ex) {
             System.out.println("Could not load db.properties, using defaults.");
+            ex.printStackTrace();
         }
     }
 

@@ -39,6 +39,10 @@ public class GestorDatos {
 
     // Prestamo operations
     public void createPrestamo(Prestamo prestamo) throws Exception {
+        List<Prestamo> existingLoans = getPrestamosBySocio(prestamo.getIdSocio());
+        if (existingLoans.size() >= 5) {
+            throw new Exception("El socio ya tiene 5 préstamos. No se pueden añadir más.");
+        }
         prestamoDAO.create(prestamo);
     }
 
