@@ -62,7 +62,22 @@ public class DatabaseConnection {
             try {
                 // Ensure Mariadb driver is loaded
                 Class.forName("org.mariadb.jdbc.Driver");
-                connection = DriverManager.getConnection(url, user, password);
+                try {
+                    connection = DriverManager.getConnection(url, user, password);
+                    System.out.println("Connected to database using configured credentials.");
+                } catch (SQLException e) {
+                    System.err.println("Failed to connect with configured credentials: " + e.getMessage());
+                    System.out.println("Attempting fallback with default credentials (root/root)...");
+                    try {
+                        connection = DriverManager.getConnection(url, "root", "root");
+                        System.out.println("Connected to database using fallback credentials (root/root).");
+                    } catch (SQLException ex) {
+                         System.err.println("Failed to connect with fallback credentials (root/root): " + ex.getMessage());
+                         System.out.println("Attempting fallback with default credentials (root/empty)...");
+                         connection = DriverManager.getConnection(url, "root", "");
+                         System.out.println("Connected to database using fallback credentials (root/empty).");
+                    }
+                }
             } catch (ClassNotFoundException e) {
                 throw new SQLException("MariaDB JDBC Driver not found", e);
             }
