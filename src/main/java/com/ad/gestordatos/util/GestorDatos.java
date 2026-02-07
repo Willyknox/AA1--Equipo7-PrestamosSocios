@@ -10,8 +10,8 @@ public class GestorDatos {
     private final PrestamoDAO prestamoDAO;
 
     public GestorDatos() {
-        this.socioDAO = new SocioDAOImpl();
-        this.prestamoDAO = new PrestamoDAOImpl();
+        this.socioDAO = new SocioDAO();
+        this.prestamoDAO = new PrestamoDAO();
     }
 
     // Socio operations
@@ -28,8 +28,6 @@ public class GestorDatos {
     }
 
     public void deleteSocio(int id) throws Exception {
-        // Optional: Check/Delete related prestamos first?
-        // For now, assume CASCADE or manual deletion handling in UI logic
         socioDAO.delete(id);
     }
 
