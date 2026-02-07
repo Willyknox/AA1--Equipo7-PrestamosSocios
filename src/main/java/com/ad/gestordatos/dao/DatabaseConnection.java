@@ -43,7 +43,15 @@ public class DatabaseConnection {
                 Class.forName("org.mariadb.jdbc.Driver");
                 connection = DriverManager.getConnection(url, user, password);
             } catch (ClassNotFoundException e) {
-                throw new SQLException("MariaDB JDBC Driver not found", e);
+                System.err.println("CRITICAL ERROR: MariaDB JDBC Driver not found!");
+                e.printStackTrace();
+                throw new SQLException("MariaDB JDBC Driver not found. Ensure the dependency is in pom.xml", e);
+            } catch (SQLException e) {
+                System.err.println("CRITICAL ERROR: Could not connect to database!");
+                System.err.println("URL: " + url);
+                System.err.println("User: " + user);
+                e.printStackTrace();
+                throw e;
             }
         }
         return connection;
