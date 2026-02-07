@@ -1,0 +1,19 @@
+interactive rebase in progress; onto e6a0759
+Last command done (1 command done):
+   pick 56b7927 # Fix database password and SocioController NPE
+No commands remaining.
+You are currently rebasing branch 'developer' on 'e6a0759'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Unmerged paths:
+  (use "git restore --staged <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+	both modified:   src/main/resources/db.properties
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	rebase_status.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")

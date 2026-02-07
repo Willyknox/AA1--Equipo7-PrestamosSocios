@@ -1,41 +1,64 @@
 package com.ad.gestordatos;
 
+import com.ad.gestordatos.dao.DatabaseInitializer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 /**
- * JavaFX App
+ * Main Entry Point for the JavaFX Application.
+ * Initializes the database and loads the main view.
  */
 public class App extends Application {
 
     private static Scene scene;
+    private static final String MAIN_VIEW = "view/MainView";
 
     @Override
     public void start(Stage stage) throws IOException {
+        initializeDatabase(stage);
+
         try {
-            // Initialize database
-            com.ad.gestordatos.dao.DatabaseInitializer.initialize();
+            // Load the main scene
+            scene = new Scene(loadFXML(MAIN_VIEW), 800, 600);
+            stage.setScene(scene);
+            stage.setTitle("Gestor de Datos");
+
+            // Ensure window closes existing threads
+            stage.setOnCloseRequest(event -> {
+                System.out.println("Application closing...");
+                System.exit(0);
+            });
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorAlert("Application Start Error", "Could not load main view", e.getMessage());
+        }
+    }
+
+    private void initializeDatabase(Stage stage) {
+        try {
+            DatabaseInitializer.initialize();
         } catch (Exception e) {
             e.printStackTrace();
-            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
-                    javafx.scene.control.Alert.AlertType.ERROR);
-            alert.setTitle("Database Error");
-            alert.setHeaderText("Could not connect to database");
-            alert.setContentText("Please ensure MariaDB is running.\nError: " + e.getMessage());
-            alert.showAndWait();
-            // Optional: exit or allow simpler mode? For now, we continue but app might fail
-            // later if DB needed.
+            showErrorAlert("Database Initialization Error",
+                    "Could not connect to or initialize the database.",
+                    "Ensure MariaDB is running.\nDetails: " + e.getMessage());
         }
+    }
 
-        scene = new Scene(loadFXML("view/MainView"), 800, 600);
-        stage.setScene(scene);
-        stage.setTitle("Gestor de Datos");
-        stage.show();
+    private void showErrorAlert(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait(); // Use showAndWait to block until user acknowledges
     }
 
     public static void setRoot(String fxml) throws IOException {

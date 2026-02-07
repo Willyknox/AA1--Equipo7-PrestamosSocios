@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 /**
- * Entity representing a Socio.
+ * Entity representing a Partner (Socio).
+ * Includes DNI validation and personal details.
  */
 public class Socio {
     private int id;
@@ -62,7 +63,7 @@ public class Socio {
 
     public void setNombre(String nombre) {
         if (nombre == null || nombre.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nombre cannot be empty");
+            throw new IllegalArgumentException("Name cannot be empty");
         }
         this.nombre = nombre;
     }
@@ -84,7 +85,7 @@ public class Socio {
 
     public void setNacimiento(LocalDate nacimiento) {
         if (nacimiento == null) {
-            throw new IllegalArgumentException("Fecha de nacimiento cannot be null");
+            throw new IllegalArgumentException("Birth date cannot be null");
         }
         this.nacimiento = nacimiento;
     }
@@ -97,19 +98,19 @@ public class Socio {
         this.masPrestamos = masPrestamos;
     }
 
+    /**
+     * Validates that the DNI string matches the pattern 8 digits + 1 letter.
+     * 
+     * @param dni The DNI string to validate.
+     * @return true if valid, false otherwise.
+     */
     public static boolean isValidDni(String dni) {
         return dni != null && DNI_PATTERN.matcher(dni).matches();
     }
-    
+
     @Override
     public String toString() {
-        return "Socio{" +
-                "id=" + id +
-                ", dni='" + dni + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", email='" + email + '\'' +
-                ", nacimiento=" + nacimiento +
-                ", masPrestamos=" + masPrestamos +
-                '}';
+        // Return Name + ID useful for ComboBox generic display if toString() is used
+        return nombre + " (ID: " + id + ")";
     }
 }

@@ -3,7 +3,9 @@ package com.ad.gestordatos.model;
 import java.time.LocalDate;
 
 /**
- * Entity representing a Prestamo.
+ * Entity representing a Loan (Prestamo).
+ * Contains details about the loan amount, dates, payment status, and associated
+ * partner ID.
  */
 public class Prestamo {
     private int id;
@@ -16,7 +18,8 @@ public class Prestamo {
     public Prestamo() {
     }
 
-    public Prestamo(int id, LocalDate diaPrestamo, LocalDate diaVencimiento, float importe, boolean estaPagado, int idSocio) {
+    public Prestamo(int id, LocalDate diaPrestamo, LocalDate diaVencimiento, float importe, boolean estaPagado,
+            int idSocio) {
         this.id = id;
         this.diaPrestamo = diaPrestamo;
         this.diaVencimiento = diaVencimiento;
@@ -47,7 +50,7 @@ public class Prestamo {
 
     public void setDiaPrestamo(LocalDate diaPrestamo) {
         if (diaPrestamo == null) {
-            throw new IllegalArgumentException("Dia prestamo cannot be null");
+            throw new IllegalArgumentException("Loan date cannot be null");
         }
         this.diaPrestamo = diaPrestamo;
     }
@@ -65,8 +68,8 @@ public class Prestamo {
     }
 
     public void setImporte(float importe) {
-         if (importe < 0) {
-            throw new IllegalArgumentException("Importe cannot be negative");
+        if (importe < 0) {
+            throw new IllegalArgumentException("Amount cannot be negative");
         }
         this.importe = importe;
     }
